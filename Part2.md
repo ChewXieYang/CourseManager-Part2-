@@ -2,12 +2,12 @@
 
 ## A. Member Contributions
 
-No | ID         | Name                     | Task descriptions | Contribution %
--- | ---------- | ------------------------ | ----------------- | --------------
-1  |1221304859  | Chew Xie Yang            |                   | 100 %
-2  |1211101453  | Lee Chun Keat            |                   | 100 %
-3  |1201303251  | Koo Wen Hao              |                   | 100 %
-4  |            |                          |                   |
+No | ID         | Name                     | Task descriptions                            | Contribution %
+-- | ---------- | ------------------------ | ---------------------------------------------| --------------
+1  |1221304859  | Chew Xie Yang            | Persistent storage, Max/Min Credit           | 100 %
+2  |1211101453  | Lee Chun Keat            | Pre-requisite, Documentation                 | 100 %
+3  |1201303251  | Koo Wen Hao              | Student view past current & future subjects, | 100 %
+4  |            |                          | Documentation                                |
 
 
 ## B. Feature Completion
@@ -16,8 +16,8 @@ Mark N for Not completed, P for partially completed, Y for completed.
 
 No | Part 2 Features (9 marks)                                                                   | Completed (N/P/Y)
 -- | ------------------------------------------------------------------------------------------- | -----------------
-1  | Persistent storage – Save student, lecturer, course data to files and load from files [2m]  | Y
-2  | Maximum and minimum credits per trimester.  [2m]                                            | Y
+1  | Persistent storage – Save student, lecturer, course data to files and load from files [2m]  | Y 
+2  | Maximum and minimum credits per trimester.  [2m]                                            | Y 
 3  | Pre-requisite for CS214 & CS224. [1m]                                                       | Y
 4  | Pre-requisite for CS316. [2m]                                                               | Y
 5  | Students can view their past subjects, current subjects, and future subjects. [2m]          | Y

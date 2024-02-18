@@ -34,6 +34,6 @@ No | Java Documentation (4 marks)             | Completed (N/P/Y)
 No | Use Appropriate Data Structures (5 marks) | Completed (N/P/Y)
 -- | ----------------------------------------- | -----------------
 1  | List, Queue, or Stack [1m]                | Y
-2  | Set [2m]                                  | Y
-3  | Map [2m]                                  | Y
+2  | Set [2m]                                  | N
+3  | Map [2m]                                  | N
 

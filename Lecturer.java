@@ -1,64 +1,34 @@
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Lecturer {
-    private String IDLecture;
-    private String name;
-    private Set<String> IDCourse = new TreeSet<>();
+class Lecturer implements Serializable{ //Can also copy and paste it to Lecturer.java
+    public String id;
+    public String name;
+    public ArrayList<Course> courses;
 
-    public Lecturer(String ID){
-        this.IDLecture = ID;
-        this.name = null;
-    }
-    public Lecturer(String ID, String name) {
-        this.IDLecture = ID;
+    public Lecturer(String id, String name, ArrayList<Course> courses) {
+        this.id = id;
         this.name = name;
+        this.courses = courses;
     }
-    public String getLID () {
-        return IDLecture;
+   
+    public String toString() {
+        return "LecturerID: " + id + ", LecturerName: " + name + " , CoursesAssigned: " + courses;
     }
-    public String getName () {
+
+    public String getName() {
         return name;
     }
-    public Set<String> getCourse () {
-        return IDCourse;
-    }
-    public void setLID(String id) {
-        this.IDLecture = id;
-    }
-    public void setName(String name) {
-        this.name = name;
+
+    public String getId() {
+        return id;
     }
 
-    void addCourse(String courseToAdd) {
-        IDCourse.add(courseToAdd);
+    public boolean contains(String LID) {
+        return false;
     }
-    void dropCourse(String courseToDrop) {
-        IDCourse.remove(courseToDrop);
-    }
-    public String printLec() {
-        return "ID = " + IDLecture + "Name = " + name ;
-    }
-    public String toString() {
-        return "ID = " + IDLecture + "Name = " + name +"\nCourse: " + IDCourse ;
-    }
-    
-    public boolean searchCourse (String course) {
-        if (IDCourse.contains(course)) 
-            return true;
-        else 
-            return false;
-            
-    }
-}
 
-class TestLecturer {
-    public static void main(String[] args) {
-        Lecturer l = new Lecturer("T001","Lee");
-        l.addCourse("TMA2201");
-        l.addCourse("TCP2010");
-        System.out.println(l.toString());
-        System.out.println(l.searchCourse("TMA2201"));
-        
+    public void addCourses(Course course){
+        courses.add(course);
     }
 }

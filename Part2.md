@@ -16,11 +16,11 @@ Mark N for Not completed, P for partially completed, Y for completed.
 
 No | Part 2 Features (9 marks)                                                                   | Completed (N/P/Y)
 -- | ------------------------------------------------------------------------------------------- | -----------------
-1  | Persistent storage – Save student, lecturer, course data to files and load from files [2m]  | Y 
-2  | Maximum and minimum credits per trimester.  [2m]                                            | Y 
-3  | Pre-requisite for CS214 & CS224. [1m]                                                       | Y
-4  | Pre-requisite for CS316. [2m]                                                               | Y
-5  | Students can view their past subjects, current subjects, and future subjects. [2m]          | Y
+1  | Persistent storage – Save student, lecturer, course data to files and load from files [2m]  | P
+2  | Maximum and minimum credits per trimester.  [2m]                                            | P 
+3  | Pre-requisite for CS214 & CS224. [1m]                                                       | P
+4  | Pre-requisite for CS316. [2m]                                                               | P
+5  | Students can view their past subjects, current subjects, and future subjects. [2m]          | P
 
 
 No | Java Documentation (4 marks)             | Completed (N/P/Y)

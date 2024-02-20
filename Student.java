@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+
+
 class Student implements Serializable{ // Can also copy and paste it to Student.java
     public String id;
     public String name;
@@ -26,27 +28,10 @@ class Student implements Serializable{ // Can also copy and paste it to Student.
 
     public String getId() {
         return id;
-    }   
-
-    public int calculateCredits(ArrayList<Course> trimesterCourses) {
-        int totalCredits = 0;
-        for (Course course : trimesterCourses) {
-            totalCredits += course.getCredits();
-        }
-        return totalCredits;
     }
 
     public boolean contains(String SID) {
         return false;
-    }
-    public int getTrimester1Credits(){
-        return calculateCredits(Trimester1);
-    }
-    public int getTrimester2Credits(){
-        return calculateCredits(Trimester1);
-    }
-    public int getTrimester3Credits(){
-        return calculateCredits(Trimester1);
     }
 
     public void addCoursesToT1(Course course){
@@ -59,6 +44,11 @@ class Student implements Serializable{ // Can also copy and paste it to Student.
         Trimester3.add(course);
     }
 
+    public boolean hasCompleted(Course course) {
+        // Implement your logic to check if the student has completed the course
+        // For simplicity, assume the student has completed the course if it's in Trimester1
+        return Trimester1.contains(course);
+    }
 }
 
 class StudentFile{
@@ -86,5 +76,57 @@ class StudentFile{
     }
 }
 }
+
+
+class StudentSubset{
+    public String id;
+    public String name;
+
+    public StudentSubset(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+   
+    public String toString() {
+        return "Student: " + id + "_" + name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
 }
 
+class StudentInCourse{
+    String CourseID;
+    String CourseName;
+    public ArrayList<LecturerSubset> lecturers;
+    public ArrayList<StudentSubset> students;
+
+    public StudentInCourse(String CourseID,String CourseName, ArrayList<LecturerSubset> lecturers ,ArrayList<StudentSubset> students){
+        
+        this.CourseID =CourseID;
+        this.CourseName =CourseName;
+        this.lecturers = lecturers;
+        this.students = students;
+    }
+
+    public String toString() {
+        return "Course: " + CourseID +"_"+ CourseName + lecturers + students;
+    }
+
+    
+    public void addStudent(StudentSubset student){
+        students.add(student);
+    }
+
+    public void addLecturers(LecturerSubset LecSub) {
+        lecturers.add(LecSub);
+    }
+    
+   
+}
+    

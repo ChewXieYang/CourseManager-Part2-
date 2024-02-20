@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Print {
-    public static void printCourses(ArrayList<Courses> courses) {
+    public static void printCourses(ArrayList<Course> courses) {
         System.out.println("*** Courses ***");
         System.out.println("No.  Code/Lecture");
         if (courses.size() == 0)

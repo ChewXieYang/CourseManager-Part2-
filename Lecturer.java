@@ -32,3 +32,26 @@ class Lecturer implements Serializable{ //Can also copy and paste it to Lecturer
         courses.add(course);
     }
 }
+
+
+class LecturerSubset{
+    public String id;
+    public String name;
+
+    public LecturerSubset(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+   
+    public String toString() {
+        return "Lecturer: " + id + "_" + name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+}

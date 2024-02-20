@@ -26,10 +26,27 @@ class Student implements Serializable{ // Can also copy and paste it to Student.
 
     public String getId() {
         return id;
+    }   
+
+    public int calculateCredits(ArrayList<Course> trimesterCourses) {
+        int totalCredits = 0;
+        for (Course course : trimesterCourses) {
+            totalCredits += course.getCredits();
+        }
+        return totalCredits;
     }
 
     public boolean contains(String SID) {
         return false;
+    }
+    public int getTrimester1Credits(){
+        return calculateCredits(Trimester1);
+    }
+    public int getTrimester2Credits(){
+        return calculateCredits(Trimester1);
+    }
+    public int getTrimester3Credits(){
+        return calculateCredits(Trimester1);
     }
 
     public void addCoursesToT1(Course course){
@@ -42,11 +59,6 @@ class Student implements Serializable{ // Can also copy and paste it to Student.
         Trimester3.add(course);
     }
 
-    public boolean hasCompleted(Course course) {
-        // Implement your logic to check if the student has completed the course
-        // For simplicity, assume the student has completed the course if it's in Trimester1
-        return Trimester1.contains(course);
-    }
 }
 
 class StudentFile{
@@ -72,6 +84,7 @@ class StudentFile{
     } catch(FileNotFoundException e){
         e.printStackTrace();
     }
+}
 }
 }
 

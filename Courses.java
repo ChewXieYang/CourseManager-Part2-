@@ -1,33 +1,71 @@
 import java.io.*;
 import java.util.*;
 
-public class Courses {
-    private int Credit;
-    private String Code;
-    private String PreReq;
-    private List<Courses> prerequisites;
+public class Course implements Serializable{ //Copy and paste it to Course.java
+    public String id;
+    public String name;
+    public int credits;
+    private List<Course> prerequisites;
+    public int minCreditsTaken;
 
-    // Constructor, getters, setters
-    public Courses(int Credit, String Code, String PreReq){
-        this.Credit = Credit;
-        this.Code = Code;
-        this.PreReq = PreReq;
+    public Course(String id, String name, int credits) {
+        this.id = id;
+        this.name = name;
+        this.credits = credits;
         this.prerequisites = new ArrayList<>();
+        this.minCreditsTaken = 0;
     }
-    public int getCredit(){
-        return Credit;
+
+    public Course(String id, String name, List<Course> prerequisites) {
+        this.id = id;
+        this.name = name;
+        this.prerequisites = prerequisites;
     }
-    public String getCode(){
-        return Code;
+
+    public void addPrerequisite(Course prerequisite) {
+        prerequisites.add(prerequisite);
     }
-    public String getPreReq(){
-        return PreReq;
+
+    public void setMinCreditsTaken(int minCredits) {
+        this.minCreditsTaken = minCredits;
     }
-    public List<Courses> getPrerequisites() {
+
+    public void setPrerequisites(List<Course> prerequisites) {
+        this.prerequisites = new ArrayList<>(prerequisites);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public List<Course> getPrerequisites() {
         return prerequisites;
     }
-}
 
+    public int getMinCreditsTaken() {
+        return minCreditsTaken;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder courseString = new StringBuilder("CourseID: " + id + ", CourseName: " + name + ", Credits: " + credits);
+        if (!prerequisites.isEmpty()) {
+            courseString.append(", Prerequisites: ");
+            for (Course prereq : prerequisites) {
+                courseString.append(prereq.getName()).append(", ");
+            }
+            courseString.delete(courseString.length() - 2, courseString.length()); // Remove trailing comma
+        }
+        courseString.append(", MinCreditsTaken: ").append(minCreditsTaken);
+
+        return courseString.toString();
+    }
+
+}
 
 class CourseFile{
     public static void main(String[] args){
@@ -52,47 +90,5 @@ class CourseFile{
     } catch(FileNotFoundException e){
         e.printStackTrace();
     }
-}
-}
-
-class Course implements Serializable{ //Copy and paste it to Course.java
-    public String id;
-    public String name;
-    private List<Course> prerequisites;
-
-    public Course(String id, String name) {
-        this.id = id;
-        this.name = name;
-        this.prerequisites = new ArrayList<>();
-    }
-
-    public Course(String id, String name, List<Course> prerequisites) {
-        this.id = id;
-        this.name = name;
-        this.prerequisites = prerequisites;
-    }
-
-    public void setPrerequisites(List<Course> prerequisites) {
-        this.prerequisites = prerequisites;
-    }
-
-    public String toString() {
-        return "CourseID: " + id + ", CourseName: " + name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public List<Course> getPrerequisites() {
-        return prerequisites;
-    }
-
-}
-
 }
 

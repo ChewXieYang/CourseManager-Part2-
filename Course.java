@@ -7,6 +7,7 @@ class Course {
     public String name;
     public int credits;
     public String PreReqID;
+    private List<Course> prerequisites;
     
 
     public Course(String id, String name , int credits , String PreReqID) {
@@ -38,6 +39,10 @@ class Course {
 
     public String getPreReqID(){
         return PreReqID;
+    }
+
+    public void setPrerequisites(List<Course> prerequisites) {
+        this.prerequisites = prerequisites;
     }
 }
 

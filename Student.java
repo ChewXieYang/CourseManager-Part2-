@@ -45,6 +45,19 @@ class Student implements Serializable{
         Trimester3.add(course);
     }
 
+
+    public void dropCoursesT1(Course course){
+        Trimester1.remove(course);
+    }
+    public void dropCoursesT2(Course course){
+        Trimester2.remove(course);
+    }
+    public void dropCoursesT3(Course course){
+        Trimester3.remove(course);
+    }
+
+
+
     public String getPreReqIDInTrimester(String courseId, ArrayList<Course> trimester) {
         for (Course c : trimester) {
             if (c.getId().equals(courseId)) {

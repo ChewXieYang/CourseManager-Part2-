@@ -33,7 +33,6 @@ class Lecturer implements Serializable{ //Can also copy and paste it to Lecturer
     }
 }
 
-
 class LecturerSubset{
     public String id;
     public String name;

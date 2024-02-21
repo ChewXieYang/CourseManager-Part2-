@@ -13,12 +13,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-
-public class MainSystem {
-    //
-}
-
-class TestSystem {
+public class MainSystem{
 
     public static void main(String[] args) {
 
@@ -28,8 +23,6 @@ class TestSystem {
         ArrayList<StudentInCourse> StudentInCourse = new ArrayList<>();
         ArrayList<LecturerSubset> subLecturerList = new ArrayList<>();
         ArrayList<StudentSubset> subStudentList = new ArrayList<>();
-
-        
 
         int option;
         int credits;
@@ -426,10 +419,26 @@ class TestSystem {
                                         break;
                                     case 3:
                                         System.out.println("Select your trimester");
-                                        System.out.println("Trimester I = 1, Trimester II = 2, Trimester = III");
+                                        System.out.print("Trimester I = 1, Trimester II = 2, Trimester = III : ");
+                                        int trimSelect = sc.nextInt();
+                                        sc.nextLine();
                                         System.out.print("Please key in course ID: ");
-                                        course = sc.nextLine();
-                                        System.out.println("You have dropped out of course: " + course);
+                                        CourID = sc.nextLine();
+                                        StuID = SID;
+                                        int Cindex = searchCourseIdIndex(CourseList,CourID);
+                                        Sindex = searchStudentIdIndex(StudentList,StuID);
+                                        Course Course = CourseList.get(Cindex);
+                                        Student Student = StudentList.get(Sindex);
+                                        if (trimSelect == 1){
+                                            Student.dropCoursesT1(Course);
+                                        }
+                                        else if (trimSelect == 2){
+                                            Student.dropCoursesT2(Course);
+                                        }
+                                        else if (trimSelect == 3){
+                                            Student.dropCoursesT3(Course);
+                                        }  
+                                        System.out.println("You have dropped out of course: " + CourID);
                                         break;
                                     case 4:
                                         exitStudentMenu = true;

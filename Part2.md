@@ -5,7 +5,7 @@
 No | ID         | Name                     | Task descriptions                            | Contribution %
 -- | ---------- | ------------------------ | ---------------------------------------------| --------------
 1  |1221304859  | Chew Xie Yang            | Persistent storage, Max/Min Credit           | 100 %
-2  |1211101453  | Lee Chun Keat            | Max/Min Credit Pre-requisite, Documentation  | 100 %
+2  |1211101453  | Lee Chun Keat            | Max/Min Credit, Pre-requisite, Documentation | 100 %
 3  |1201303251  | Koo Wen Hao              | Student view past current & future subjects, | 100 %
 4  |            |                          | Documentation                                |
 

@@ -3,9 +3,10 @@ import java.util.*;
 
 
 
-class Student implements Serializable{ // Can also copy and paste it to Student.java
+class Student implements Serializable{ 
     public String id;
     public String name;
+    public String PreReqID;
     public ArrayList<Course> Trimester1;
     public ArrayList<Course> Trimester2;
     public ArrayList<Course> Trimester3;
@@ -42,6 +43,15 @@ class Student implements Serializable{ // Can also copy and paste it to Student.
     }
     public void addCoursesToT3(Course course){
         Trimester3.add(course);
+    }
+
+    public String getPreReqIDInTrimester(String courseId, ArrayList<Course> trimester) {
+        for (Course c : trimester) {
+            if (c.getId().equals(courseId)) {
+                return c.getId();
+            }
+        }
+        return null; // Course not found in the trimester or prerequisite ID not available
     }
 
     public boolean hasCompleted(Course course) {

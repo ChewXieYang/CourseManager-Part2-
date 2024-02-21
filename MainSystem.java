@@ -6,6 +6,8 @@
 // -Admin can view all the students and lecturers for courses.
 // -Lecturer can view all the student in their courses. // PARTIALLY
 // Maximum and minimum credits per trimester.
+// Pre-requisite for CS214 & CS224.
+// Pre-requisite for CS316. // PARTIALLY
 // Students can view their past subjects, current subjects, and future subjects.  // PARTIALLY ?
 
 import java.util.ArrayList;
@@ -39,7 +41,11 @@ class TestSystem {
         String StuID;
         String name;
         String reqID;
+        String verifyPreReq1;
+        String verifyPreReq2;
+        String verifyPreReq3;
         String prereqQuest;
+        String coursePreReq;
         String confirmation;
         boolean exitProgram = false;
 
@@ -54,10 +60,15 @@ class TestSystem {
         subStudentList.add(new StudentSubset("1211101452", "Teo"));
         LecturerList.add(new Lecturer("905488", "Steven",new ArrayList<>()));
         subLecturerList.add(new LecturerSubset("905488","Steven"));
-        CourseList.add(new Course("C102","OOPDS",3));
-        CourseList.add(new Course("C103", "Database",2));
+        CourseList.add(new Course("C102","OOPDS",3, null));
+        CourseList.add(new Course("C103", "Database",2 , null));
+        CourseList.add(new Course("C112", "Calculus",3 , "C102"));
+        CourseList.add(new Course("C113", "Programming",3 , "C103"));
+
         StudentInCourse.add(new StudentInCourse("C102","OOPDS", new ArrayList<>(), new ArrayList<>()));
         StudentInCourse.add(new StudentInCourse("C103","Database", new ArrayList<>(), new ArrayList<>()));
+        StudentInCourse.add(new StudentInCourse("C112","Calculus", new ArrayList<>(), new ArrayList<>()));
+        StudentInCourse.add(new StudentInCourse("C113","Programming", new ArrayList<>(), new ArrayList<>()));
 
         System.out.println("Welcome to Course Manager");
         do {
@@ -98,28 +109,34 @@ class TestSystem {
                                             CourID = sc.nextLine();
                                             System.out.print("Please Enter Course Name: ");
                                             name = sc.nextLine();
-                                            System.out.print("Please Enter Course Credits");
+                                            System.out.print("Please Enter Course Credits: ");
                                             credits = sc.nextInt();
-                                            CourseList.add(new Course(CourID, name, credits));
-                                            StudentInCourse.add(new StudentInCourse(CourID,name,new ArrayList<>(),new ArrayList<>()));
-                                            System.out.println("Successfully added " + CourID + " " + name + " " + "Credits: " + credits);
-                                            for (Course list : CourseList) {
+
+                                            
+                                            sc.nextLine(); // consume
+                                            System.out.print("Pre-req require? (Y/N): ");
+                                            prereqQuest = sc.nextLine();
+
+                                            if (prereqQuest.equalsIgnoreCase("Y"))
+                                            {   
+                                                System.out.print("Enter Pre-req ID: ");
+                                                reqID = sc.nextLine();
+                                                CourseList.add(new Course(CourID, name, credits, reqID));
+                                                StudentInCourse.add(new StudentInCourse(CourID,name,new ArrayList<>(),new ArrayList<>()));
+                                                System.out.println("Successfully added " + CourID + " " + name + " " + "Credits: " + credits + " PreReq: " + reqID);
+                                                for (Course list : CourseList) {
                                                 System.out.println(list.toString());
+                                                }
                                             }
-
-                                            // credits = sc.nextInt();
-                                            // sc.nextLine(); // consume
-                                            // System.out.print("Pre-req require? (Y/N)");
-                                            // prereqQuest = sc.nextLine();
-
-                                            // if (prereqQuest.equalsIgnoreCase("Y"))
-                                            // {   
-                                            //     System.out.print("Enter Pre-req ID: ");
-                                            //     reqID = sc.nextLine();
-                                                
-                                            // }
-
-                                            sc.nextLine(); //CONSUME
+                                            else{
+                                                CourseList.add(new Course(CourID, name, credits, null));
+                                                StudentInCourse.add(new StudentInCourse(CourID,name,new ArrayList<>(),new ArrayList<>()));
+                                                System.out.println("Successfully added " + CourID + " " + name + " " + "Credits: " + credits);
+                                                for (Course list : CourseList) {
+                                                System.out.println(list.toString());
+                                                }
+                                            }
+                                            
                                             System.out.print("Do you still want to add (Y/N): ");
                                             confirmation = sc.nextLine();
                                         } while (confirmation.equalsIgnoreCase("Y"));
@@ -240,18 +257,33 @@ class TestSystem {
                                                 StudentInCourse siCourse = StudentInCourse.get(Cindex);
                                                 
                                                 int courseCredit = Course.getCredits();
+
+
+                                                coursePreReq = Course.getPreReqID();
+                                                //verifyPreReq1 = Student.getPreReqIDInTrimester(CourID, Student.Trimester1); // trimester 1 dont need check pre-req since its the start of the trimester
+                                                
                                                 if (currentCredits + courseCredit < MIN_CREDITS_PER_TRIMESTER ){
-                                                    Student.addCoursesToT1(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
-                                                    System.out.println("Credit hour not enough");
+                                                    if (coursePreReq == null){
+                                                        Student.addCoursesToT1(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                        System.out.println("Credit hour not enough, please enroll more courses");
+                                                    }
+                                                    else if (coursePreReq != null){
+                                                        System.out.println("Pre-req not satisfied");
+                                                    }
                                                 }
                                                 else if(currentCredits + courseCredit <= MAX_CREDITS_PER_TRIMESTER ){
-                                                    Student.addCoursesToT1(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
+                                                    if (coursePreReq == null){
+                                                        Student.addCoursesToT1(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                    }
+                                                    else if (coursePreReq != null){
+                                                        System.out.println("Pre-req " + coursePreReq + " not satisfied");
+                                                    }
                                                 }
                                                 else if (currentCredits + courseCredit > MAX_CREDITS_PER_TRIMESTER){
                                                     System.out.println("Credit hour exceeded for Trimerster 1");
@@ -274,18 +306,46 @@ class TestSystem {
                                                 StudentInCourse siCourse = StudentInCourse.get(Cindex);
 
                                                 int courseCredit = Course.getCredits();
+
+                                                coursePreReq = Course.getPreReqID();
+                                                verifyPreReq1 = Student.getPreReqIDInTrimester(coursePreReq, Student.Trimester1); // Trimester2 , we check the prereq for trimster 1 only.
+                                                
                                                 if (currentCredits + courseCredit < MIN_CREDITS_PER_TRIMESTER ){
-                                                    Student.addCoursesToT2(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
-                                                    System.out.println("Credit hour not enough");
+                                                    if (coursePreReq == null){
+                                                        Student.addCoursesToT2(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                        System.out.println("Credit hour not enough, please enroll more courses");
+                                                    }
+                                                    else if (coursePreReq.equals(verifyPreReq1)){
+                                                        Student.addCoursesToT2(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                        System.out.println("Credit hour not enough, please enroll more courses");
+                                                    }
+                                                    else if (!coursePreReq.equals(verifyPreReq1)){
+                                                        System.out.println("Pre-req " + coursePreReq + " not satisfied");
+                                                    }
+                                                    
                                                 }
                                                 else if(currentCredits + courseCredit <= MAX_CREDITS_PER_TRIMESTER ){
-                                                    Student.addCoursesToT2(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
+                                                    if (coursePreReq == null){
+                                                        Student.addCoursesToT2(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                    }
+                                                    else if (coursePreReq.equals(verifyPreReq1)){
+                                                        Student.addCoursesToT2(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                    }
+                                                    else if (!coursePreReq.equals(verifyPreReq1)){
+                                                        System.out.println("Pre-req " + coursePreReq + " not satisfied");
+                                                    }
                                                 }
                                                 else if (currentCredits + courseCredit > MAX_CREDITS_PER_TRIMESTER){
                                                     System.out.println("Credit hour exceeded for Trimerster 2");
@@ -308,23 +368,52 @@ class TestSystem {
                                                 StudentInCourse siCourse = StudentInCourse.get(Cindex);
 
                                                 int courseCredit = Course.getCredits();
+
+                                                coursePreReq = Course.getPreReqID();
+                                                verifyPreReq1 = Student.getPreReqIDInTrimester(coursePreReq, Student.Trimester1); // Trimester3, we check the prereq for both trimester 1 and 2
+                                                verifyPreReq2 = Student.getPreReqIDInTrimester(coursePreReq, Student.Trimester2); // Trimester3, we check the prereq for both trimester 1 and 2
+
                                                 if (currentCredits + courseCredit < MIN_CREDITS_PER_TRIMESTER ){
-                                                    Student.addCoursesToT3(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
-                                                    System.out.println("Credit hour not enough");
+                                                    if (coursePreReq == null){ // straight away enroll
+                                                        Student.addCoursesToT3(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                        System.out.println("Credit hour not enough, please enroll more courses");
+                                                    }
+                                                    else if ( (coursePreReq.equals(verifyPreReq1)) || (coursePreReq.equals(verifyPreReq2))) // if either trimester 1 or 2 have taken pre req course
+                                                    {
+                                                        Student.addCoursesToT3(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                        System.out.println("Credit hour not enough, please enroll more courses");
+                                                    }
+                                                    else if ( !(coursePreReq.equals(verifyPreReq1)) && !(coursePreReq.equals(verifyPreReq2))){ // both doesn't taken pre req course
+                                                        System.out.println("Pre-req " + coursePreReq + " not satisfied");
+                                                    }
                                                 }
                                                 else if(currentCredits + courseCredit <= MAX_CREDITS_PER_TRIMESTER  ){
-                                                    Student.addCoursesToT3(Course);
-                                                    siCourse.addStudent(StuSub);
-                                                    System.out.println(StudentList.get(Sindex));
-                                                    currentCredits += courseCredit;
+                                                    if (coursePreReq == null){
+                                                        Student.addCoursesToT3(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                    }
+                                                    else if ( (coursePreReq.equals(verifyPreReq1)) || (coursePreReq .equals(verifyPreReq2))) // if either trimester 1 or 2 have taken pre req course
+                                                    {
+                                                        Student.addCoursesToT3(Course);
+                                                        siCourse.addStudent(StuSub);
+                                                        System.out.println(StudentList.get(Sindex));
+                                                        currentCredits += courseCredit;
+                                                    }
+                                                    else if ( !(coursePreReq.equals(verifyPreReq1)) && !(coursePreReq.equals(verifyPreReq2))){ // both doesn't taken pre req course
+                                                        System.out.println("Pre-req " + coursePreReq + " not satisfied");
+                                                    }
                                                 }
                                                 else if (currentCredits + courseCredit > MAX_CREDITS_PER_TRIMESTER){
                                                     System.out.println("Credit hour exceeded for this Trimerster 3");
                                                 }
-                                                System.out.println(StudentList.get(Sindex));
                                                 System.out.print("Do you still want to assign (Y/N): ");
                                                 confirmation = sc.nextLine();
                                                 } while (confirmation.equalsIgnoreCase("Y"));

@@ -2,23 +2,27 @@ import java.io.*;
 import java.util.*;
 
 
-class Course { //Copy and paste it to Course.java
+class Course { 
     public String id;
     public String name;
     public int credits;
     public String PreReqID;
     
 
-    public Course(String id, String name , int credits) {
+    public Course(String id, String name , int credits , String PreReqID) {
         this.id = id;
         this.name = name;
         this.credits = credits;
-        //this.PreReqID = PreReqID;
+        this.PreReqID = PreReqID;
     }
 
     public String toString() {
-        return "CourseID: " + id + ", CourseName: " + name ;
+        return "CourseID: " + id + ", CourseName: " + name;
     }
+    
+    // public String toString2(){
+    //     return "CourseID: " + id + ", CourseName: " + name;
+    // }
 
     public String getName() {
         return name;
